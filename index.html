@@ -418,6 +418,25 @@
             return params.get('utm_source') || params.get('ref') || 'direct';
         }
         
+        function getDevice() {
+            const ua = navigator.userAgent;
+            if (/Mobile|Android|iPhone|iPad|iPod/i.test(ua)) {
+                return 'mobile';
+            }
+            return 'desktop';
+        }
+        
+        function getReferrer() {
+            return document.referrer || 'direct';
+        }
+        
+        // Get country from free API (no API key needed)
+        let userCountry = 'unknown';
+        fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(data => { userCountry = data.country_name || 'unknown'; })
+            .catch(() => { userCountry = 'unknown'; });
+        
         const SUPABASE_URL = 'https://eastoooirwebberfytyh.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN';
         
@@ -446,7 +465,10 @@
                     },
                     body: JSON.stringify({
                         email: email,
-                        source: getSource()
+                        source: getSource(),
+                        country: userCountry,
+                        device: getDevice(),
+                        referrer: getReferrer()
                     })
                 });
                 

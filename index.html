@@ -355,9 +355,9 @@
             button.disabled = true; button.textContent = 'Joining...';
             try {
                 const info = await getVisitorInfo();
-                const res = await fetch('https://zmlwomqoytxvojtdhdxp.supabase.co/rest/v1/signups', {
+                const res = await fetch('https://eastoooirwebberfytyh.supabase.co/rest/v1/signups', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptbHdvbXFveXR4dm9qdGRoZHhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU4MTU4NzAsImV4cCI6MjA1MTM5MTg3MH0.xXK_Pvxp4l4Mqh-xJo0X-h-Z_2hHvKqJNy7b0rSfqpI', 'Prefer': 'return=minimal' },
+                    headers: { 'Content-Type': 'application/json', 'apikey': 'sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN', 'Authorization': 'Bearer sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN', 'Prefer': 'return=minimal' },
                     body: JSON.stringify({ email, country: info.country, device: info.device, source: info.source, referrer: info.referrer })
                 });
                 if (res.ok || res.status === 201) { form.style.display = 'none'; document.getElementById(successId).style.display = 'block'; }

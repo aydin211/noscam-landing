@@ -3,13 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoScam — On-Device AI Scam Protection for Every Android</title>
-    <meta name="description" content="Real-time on-device AI scam protection. No cloud. No data collection. Works on any Android phone, any carrier.">
+    <title>NoScam — On-Device AI Scam Protection for Every Android Phone</title>
+    <meta name="description" content="Free AI-powered scam call blocker and phishing protection for Android. Detects scams in real-time using on-device AI. No cloud, no data collection. Works offline on any carrier.">
+    <meta name="keywords" content="scam blocker, scam call blocker, AI scam protection, android scam app, phishing protection, call protection app, spam blocker, robocall blocker, on-device AI, privacy">
+    <meta name="author" content="NoScam">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://noscam.io">
     
-    <meta property="og:title" content="NoScam — AI Scam Protection for the Rest of Us">
-    <meta property="og:description" content="On-device AI that detects scams in real-time. No $799 phone required. Works offline on any Android.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="NoScam — AI Scam Protection for Every Android Phone">
+    <meta property="og:description" content="On-device AI that detects scam calls and phishing in real-time. No $799 Pixel required. Works offline on any Android.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://noscam.io">
+    <meta property="og:site_name" content="NoScam">
+    <meta property="og:image" content="https://noscam.io/og-image.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NoScam — AI Scam Protection for Every Android">
+    <meta name="twitter:description" content="On-device AI scam detection. No cloud. No data collection. Works on any Android phone.">
+    <meta name="twitter:image" content="https://noscam.io/og-image.png">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "NoScam",
+        "description": "AI-powered scam call blocker and phishing protection for Android phones. Uses on-device AI to detect scams in real-time without sending data to the cloud.",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Android",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "NoScam",
+            "url": "https://noscam.io"
+        }
+    }
+    </script>
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     
@@ -144,6 +179,9 @@
         footer { padding: 32px 0; text-align: center; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border); }
         footer a { color: var(--text-soft); text-decoration: none; }
         footer a:hover { color: var(--accent); }
+        .footer-content { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .ph-badge { transition: opacity 0.2s; }
+        .ph-badge:hover { opacity: 0.8; }
         
         /* Responsive */
         @media (max-width: 640px) {
@@ -410,7 +448,12 @@
     
     <footer>
         <div class="container">
-            <p>© 2025 NoScam · <a href="mailto:hello@noscam.io">Contact</a></p>
+            <div class="footer-content">
+                <a href="https://www.producthunt.com/products/noscam?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-noscam" target="_blank" rel="noopener noreferrer" class="ph-badge">
+                    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1058482&theme=light&t=1767603610898" alt="NoScam - AI scam protection that runs on your phone, not the cloud | Product Hunt" width="250" height="54">
+                </a>
+                <p>© 2025 NoScam · <a href="mailto:hello@noscam.io">Contact</a></p>
+            </div>
         </div>
     </footer>
     

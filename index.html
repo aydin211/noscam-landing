@@ -3,186 +3,583 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoScam — Real-Time AI Scam Protection</title>
-    <meta name="description" content="AI-powered scam call protection that warns you during the call, not after. Protect your parents, your kids, and yourself.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23DC2626'/><path d='M50 20 L75 35 V55 C75 70 50 85 50 85 C50 85 25 70 25 55 V35 L50 20Z' fill='white'/><path d='M45 50 L48 53 L55 46' stroke='%23DC2626' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-    <meta property="og:title" content="NoScam — Real-Time AI Scam Protection">
-    <meta property="og:description" content="AI warns you during scam calls, not after. Protect your loved ones.">
+    <title>NoScam — AI Guardian for Calls, Texts & Chats</title>
+    <meta name="description" content="On-device AI that detects scams in real-time across phone calls, SMS, and messaging apps. Protect your loved ones everywhere they communicate.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234F46E5'/><path d='M50 20 L75 35 V55 C75 70 50 85 50 85 C50 85 25 70 25 55 V35 L50 20Z' fill='white'/><path d='M45 50 L48 53 L55 46' stroke='%234F46E5' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+    <meta property="og:title" content="NoScam — AI Guardian for Calls, Texts & Chats">
+    <meta property="og:description" content="On-device AI scam protection across all your communication apps.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#FAFAF9;--bg-alt:#F5F5F4;--text:#1C1917;--text-muted:#57534E;--accent:#DC2626;--accent-dark:#B91C1C;--accent-light:#FEE2E2;--success:#059669;--success-light:#D1FAE5;--border:#E7E5E4;--card:#FFFFFF}
+        :root{--bg:#FAFAFA;--bg-alt:#F4F4F5;--text:#18181B;--text-muted:#71717A;--accent:#4F46E5;--accent-dark:#4338CA;--accent-light:#EEF2FF;--success:#10B981;--success-light:#D1FAE5;--danger:#EF4444;--warning:#F59E0B;--border:#E4E4E7;--card:#FFFFFF}
         html{scroll-behavior:smooth}
-        body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
-        .container{max-width:1100px;margin:0 auto;padding:0 24px}
-        .ph-banner{background:linear-gradient(135deg,#DA552F 0%,#EA8D4E 100%);color:white;padding:10px 20px;text-align:center;font-size:14px;font-weight:500}
+        body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+        .container{max-width:1140px;margin:0 auto;padding:0 24px}
+        
+        .ph-banner{background:linear-gradient(135deg,#4F46E5 0%,#7C3AED 100%);color:white;padding:12px 20px;text-align:center;font-size:14px;font-weight:500}
         .ph-banner a{color:white;text-decoration:underline;font-weight:600}
-        nav{position:sticky;top:0;background:rgba(250,250,249,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:100;padding:16px 0}
+        
+        nav{position:sticky;top:0;background:rgba(250,250,250,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:100;padding:16px 0}
         .nav-inner{display:flex;justify-content:space-between;align-items:center}
-        .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:8px}
+        .logo{font-weight:700;font-size:22px;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:8px}
         .logo-icon{width:32px;height:32px}
         .nav-links{display:flex;gap:32px;align-items:center}
-        .nav-links a{color:var(--text-muted);text-decoration:none;font-size:15px;font-weight:500;transition:color 0.2s}
+        .nav-links a{color:var(--text-muted);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
         .nav-links a:hover{color:var(--text)}
-        .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;border-radius:10px;text-decoration:none;cursor:pointer;transition:all 0.2s;border:none}
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;font-weight:600;font-size:14px;border-radius:8px;text-decoration:none;cursor:pointer;transition:all 0.2s;border:none;font-family:inherit}
         .btn-primary{background:var(--accent);color:white}
-        .btn-primary:hover{background:var(--accent-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(220,38,38,0.3)}
-        .hero{padding:80px 0 100px;position:relative}
+        .btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(79,70,229,0.3)}
+        
+        /* Hero */
+        .hero{padding:80px 0 100px}
         .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-        .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;border-radius:100px;margin-bottom:24px;animation:fadeInUp 0.6s ease-out}
-        .hero-badge::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:600;border-radius:100px;margin-bottom:20px}
+        .hero h1{font-size:clamp(36px,4.5vw,52px);font-weight:700;line-height:1.15;margin-bottom:20px;letter-spacing:-0.02em}
+        .hero h1 .highlight{background:linear-gradient(135deg,var(--accent),#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero-sub{font-size:18px;color:var(--text-muted);margin-bottom:32px;max-width:480px;line-height:1.7}
+        .hero-form{display:flex;gap:12px;margin-bottom:16px}
+        .hero-form input{flex:1;padding:14px 18px;font-size:15px;font-family:inherit;border:1px solid var(--border);border-radius:8px;background:var(--card);outline:none;transition:all 0.2s}
+        .hero-form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+        .hero-note{font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+        .hero-note svg{color:var(--success);width:16px;height:16px}
+        .success-message{display:none;padding:16px;background:var(--success-light);border-radius:8px;color:#065F46;font-weight:500;font-size:14px}
+        .success-message.show{display:block}
+        .different-email{display:none;margin-top:10px;font-size:13px}
+        .different-email.show{display:block}
+        .different-email a{color:var(--accent);cursor:pointer;text-decoration:underline}
+        
+        /* Phone Mockup */
+        .phone-mockup{position:relative}
+        .phone-frame{width:300px;height:620px;background:linear-gradient(145deg,#1f1f1f,#2a2a2a);border-radius:40px;padding:10px;box-shadow:0 25px 80px rgba(0,0,0,0.25),inset 0 0 0 1px rgba(255,255,255,0.1);margin:0 auto;position:relative}
+        .phone-frame::before{content:'';position:absolute;top:18px;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#1a1a1a;border-radius:12px;z-index:20}
+        .phone-screen{width:100%;height:100%;background:#0a0a0a;border-radius:32px;overflow:hidden;position:relative}
+        
+        .android-ui{height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,#0f172a 0%,#1e293b 100%)}
+        .status-bar{display:flex;justify-content:space-between;align-items:center;padding:8px 20px;font-size:11px;color:rgba(255,255,255,0.7)}
+        .status-bar-left{display:flex;gap:4px;align-items:center}
+        .status-bar-right{display:flex;gap:6px;align-items:center;font-size:10px}
+        
+        .call-content{flex:1;display:flex;flex-direction:column;align-items:center;padding:50px 20px 20px}
+        .caller-avatar{width:90px;height:90px;background:linear-gradient(135deg,#6366F1,#8B5CF6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:600;color:white;margin-bottom:16px}
+        .caller-name{font-size:24px;font-weight:600;color:white;margin-bottom:4px}
+        .caller-number{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:6px}
+        .call-status{font-size:14px;color:rgba(255,255,255,0.6);font-variant-numeric:tabular-nums}
+        
+        .scam-alert{position:absolute;top:160px;left:10px;right:10px;background:linear-gradient(135deg,#DC2626,#B91C1C);border-radius:16px;padding:16px;opacity:0;transform:translateY(-10px);box-shadow:0 10px 40px rgba(220,38,38,0.4)}
+        .scam-alert.show{animation:slideIn 0.4s ease forwards}
+        @keyframes slideIn{to{opacity:1;transform:translateY(0)}}
+        .alert-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+        .alert-icon-box{width:36px;height:36px;background:white;border-radius:10px;display:flex;align-items:center;justify-content:center}
+        .alert-icon-box svg{width:22px;height:22px;color:#DC2626}
+        .alert-badge-text{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:rgba(255,255,255,0.85)}
+        .alert-title{font-size:17px;font-weight:700;color:white;margin-bottom:6px}
+        .alert-desc{font-size:13px;color:rgba(255,255,255,0.9);line-height:1.5;margin-bottom:14px}
+        .alert-btns{display:flex;gap:10px}
+        .alert-btn{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
+        .alert-btn-end{background:white;color:#DC2626}
+        .alert-btn-safe{background:rgba(255,255,255,0.2);color:white}
+        
+        .protection-pill{position:absolute;bottom:140px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(79,70,229,0.95);border-radius:100px;font-size:12px;font-weight:500;color:white}
+        .protection-dot{width:8px;height:8px;background:#10B981;border-radius:50%;animation:pulse 2s infinite}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
-        .hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,5vw,56px);font-weight:700;line-height:1.1;margin-bottom:24px;animation:fadeInUp 0.6s ease-out 0.1s both}
-        .hero h1 .highlight{color:var(--accent)}
-        .hero-sub{font-size:18px;color:var(--text-muted);margin-bottom:32px;max-width:480px;animation:fadeInUp 0.6s ease-out 0.2s both}
-        .hero-sub strong{color:var(--text);font-weight:600}
-        .hero-form{display:flex;gap:12px;margin-bottom:16px;animation:fadeInUp 0.6s ease-out 0.3s both}
-        .hero-form input{flex:1;padding:16px 20px;font-size:16px;font-family:inherit;border:2px solid var(--border);border-radius:10px;background:var(--card);outline:none;transition:all 0.2s}
-        .hero-form input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
-        .hero-note{font-size:14px;color:var(--text-muted);display:flex;align-items:center;gap:8px;animation:fadeInUp 0.6s ease-out 0.4s both}
-        .hero-note svg{color:var(--success)}
-        .phone-mockup{position:relative;animation:fadeInUp 0.8s ease-out 0.3s both}
-        .phone-frame{width:280px;height:580px;background:#1C1917;border-radius:40px;padding:12px;box-shadow:0 50px 100px rgba(0,0,0,0.15),0 20px 40px rgba(0,0,0,0.1);margin:0 auto}
-        .phone-screen{width:100%;height:100%;background:linear-gradient(180deg,#18181B 0%,#27272A 100%);border-radius:32px;overflow:hidden;position:relative}
-        .phone-notch{width:120px;height:28px;background:#1C1917;border-radius:0 0 20px 20px;margin:0 auto}
-        .call-ui{padding:40px 20px 20px;text-align:center;color:white}
-        .caller-avatar{width:80px;height:80px;background:linear-gradient(135deg,#3B82F6,#8B5CF6);border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:600}
-        .caller-name{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;margin-bottom:4px}
-        .caller-number{font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:8px}
-        .call-duration{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:24px}
-        .scam-alert{background:linear-gradient(135deg,#DC2626,#B91C1C);margin:0 8px;padding:16px;border-radius:16px;opacity:0;transform:scale(0.9)}
-        .scam-alert.active{animation:alertAppear 0.5s ease-out forwards,alertPulse 2s infinite 0.5s}
-        @keyframes alertAppear{to{opacity:1;transform:scale(1)}}
-        @keyframes alertPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.4)}50%{box-shadow:0 0 0 12px rgba(220,38,38,0)}}
-        .alert-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-        .alert-icon{width:28px;height:28px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px}
-        .alert-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px}
-        .alert-text{font-size:13px;color:rgba(255,255,255,0.9);line-height:1.4;margin-bottom:12px}
-        .alert-buttons{display:flex;gap:8px}
-        .alert-btn{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:600;border:none;cursor:pointer}
-        .alert-btn.end{background:white;color:var(--accent)}
-        .alert-btn.dismiss{background:rgba(255,255,255,0.2);color:white}
-        .listening-indicator{position:absolute;bottom:120px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(255,255,255,0.1);border-radius:100px;font-size:12px;color:rgba(255,255,255,0.7)}
-        .listening-dot{width:8px;height:8px;background:#22C55E;border-radius:50%;animation:blink 1s infinite}
-        @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-        .call-actions{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:40px}
-        .call-action-btn{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
-        .call-action-btn.end-call{background:#DC2626}
-        .call-action-btn.speaker{background:rgba(255,255,255,0.15)}
-        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        
+        .call-buttons{position:absolute;bottom:40px;left:0;right:0;display:flex;justify-content:center;gap:80px}
+        .call-btn{display:flex;flex-direction:column;align-items:center;gap:8px}
+        .call-btn-circle{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+        .call-btn-circle.red{background:#EF4444}
+        .call-btn-circle.green{background:#10B981}
+        .call-btn-circle svg{width:26px;height:26px;color:white}
+        .call-btn span{font-size:11px;color:rgba(255,255,255,0.6)}
+        
+        /* Stats */
         .stats{padding:60px 0;background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
         .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
-        .stat-item h3{font-family:'Space Grotesk',sans-serif;font-size:42px;font-weight:700;color:var(--accent);margin-bottom:8px}
-        .stat-item p{font-size:14px;color:var(--text-muted)}
-        .section-label{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:16px}
-        .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,42px);font-weight:700;margin-bottom:20px;max-width:600px}
-        .section-desc{font-size:18px;color:var(--text-muted);max-width:600px;margin-bottom:48px}
-        .problem{padding:100px 0}
-        .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-        .problem-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all 0.3s}
-        .problem-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.08)}
-        .problem-card .icon{width:48px;height:48px;background:var(--accent-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px}
-        .problem-card h4{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin-bottom:8px}
-        .problem-card p{font-size:15px;color:var(--text-muted);line-height:1.5}
-        .checklist{background:var(--bg-alt);border-radius:16px;padding:32px;margin-top:48px}
-        .checklist h4{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin-bottom:20px}
-        .checklist-items{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-        .checklist-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--card);border-radius:10px;font-size:15px}
-        .checklist-item .check{width:24px;height:24px;background:var(--accent-light);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:14px;flex-shrink:0}
-        .how-it-works{padding:100px 0;background:var(--bg-alt)}
-        .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px}
-        .step{text-align:center;position:relative}
-        .step::after{content:'→';position:absolute;right:-24px;top:40px;font-size:24px;color:var(--border)}
-        .step:last-child::after{display:none}
-        .step-num{width:64px;height:64px;background:var(--accent);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;margin:0 auto 20px}
-        .step h4{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin-bottom:12px}
-        .step p{font-size:15px;color:var(--text-muted);max-width:280px;margin:0 auto}
-        .features{padding:100px 0}
-        .features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
-        .feature-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;transition:all 0.3s}
-        .feature-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.08)}
-        .feature-card .icon{width:56px;height:56px;background:var(--accent-light);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:20px}
-        .feature-card h4{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin-bottom:12px}
-        .feature-card p{font-size:15px;color:var(--text-muted);line-height:1.6}
-        .comparison{padding:100px 0;background:var(--bg-alt)}
-        .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px}
-        .comparison-card{background:var(--card);border-radius:20px;overflow:hidden}
-        .comparison-card.others{border:1px solid var(--border)}
-        .comparison-card.noscam{border:2px solid var(--accent);box-shadow:0 20px 60px rgba(220,38,38,0.15)}
-        .comparison-header{padding:24px;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600}
-        .comparison-card.others .comparison-header{background:var(--bg-alt)}
-        .comparison-card.noscam .comparison-header{background:var(--accent);color:white}
-        .comparison-list{padding:24px;list-style:none}
-        .comparison-list li{display:flex;align-items:flex-start;gap:12px;padding:12px 0;font-size:15px;border-bottom:1px solid var(--border)}
-        .comparison-list li:last-child{border-bottom:none}
-        .comparison-list .icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-        .comparison-card.others .icon{background:#FEE2E2;color:#DC2626}
-        .comparison-card.noscam .icon{background:var(--success-light);color:var(--success)}
-        .social-proof{padding:100px 0}
-        .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
-        .testimonial{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px}
-        .testimonial-text{font-size:15px;line-height:1.6;margin-bottom:20px;font-style:italic}
-        .testimonial-author{display:flex;align-items:center;gap:12px}
-        .testimonial-avatar{width:40px;height:40px;background:var(--bg-alt);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
-        .testimonial-info{font-size:14px}
-        .testimonial-info strong{display:block;font-weight:600}
-        .testimonial-info span{color:var(--text-muted)}
-        .waitlist-count{text-align:center;margin-top:48px;padding:24px;background:var(--accent-light);border-radius:12px}
-        .waitlist-count p{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:var(--accent)}
-        .faq{padding:100px 0;background:var(--bg-alt)}
-        .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
-        .faq-item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px}
-        .faq-item h4{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-bottom:12px;display:flex;align-items:flex-start;gap:12px}
-        .faq-item h4::before{content:'Q';display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--accent);color:white;border-radius:6px;font-size:14px;flex-shrink:0}
-        .faq-item p{font-size:15px;color:var(--text-muted);line-height:1.6;padding-left:40px}
+        .stat h3{font-size:40px;font-weight:700;color:var(--accent);margin-bottom:6px}
+        .stat p{font-size:13px;color:var(--text-muted)}
+        
+        /* Section Styles */
+        .section{padding:100px 0}
+        .section-alt{background:var(--bg-alt)}
+        .section-header{text-align:center;margin-bottom:60px}
+        .section-label{display:inline-block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:12px}
+        .section-title{font-size:clamp(28px,3.5vw,40px);font-weight:700;margin-bottom:16px;letter-spacing:-0.02em}
+        .section-desc{font-size:17px;color:var(--text-muted);max-width:600px;margin:0 auto}
+        
+        /* Problem Grid */
+        .problem-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+        .problem-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all 0.2s}
+        .problem-card:hover{border-color:var(--accent);box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+        .problem-card .icon{width:44px;height:44px;background:var(--accent-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+        .problem-card .icon svg{width:22px;height:22px;color:var(--accent)}
+        .problem-card h4{font-size:16px;font-weight:600;margin-bottom:8px}
+        .problem-card p{font-size:14px;color:var(--text-muted);line-height:1.6}
+        
+        /* Steps - Professional Icons */
+        .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+        .step{text-align:center}
+        .step-icon{width:72px;height:72px;background:linear-gradient(135deg,var(--accent),#7C3AED);color:white;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(79,70,229,0.25)}
+        .step-icon svg{width:32px;height:32px}
+        .step h4{font-size:18px;font-weight:600;margin-bottom:10px}
+        .step p{font-size:14px;color:var(--text-muted);max-width:260px;margin:0 auto;line-height:1.6}
+        .tech-note{text-align:center;margin-top:40px;padding:16px 24px;background:var(--success-light);border-radius:10px;font-size:14px;color:#065F46;font-weight:500;display:inline-flex;align-items:center;gap:8px}
+        .tech-note-wrap{text-align:center}
+        
+        /* Comparison Table */
+        .comparison-table{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:40px}
+        .comparison-table table{width:100%;border-collapse:collapse}
+        .comparison-table th,.comparison-table td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--border);font-size:14px}
+        .comparison-table th{background:var(--bg-alt);font-weight:600;font-size:13px}
+        .comparison-table th:first-child{width:40%}
+        .comparison-table tr:last-child td{border-bottom:none}
+        .comparison-table .check{color:var(--success);font-weight:600}
+        .comparison-table .cross{color:#DC2626}
+        .comparison-table .noscam-col{background:var(--accent-light)}
+        .comparison-table th.noscam-col{background:var(--accent);color:white}
+        
+        /* Use Cases - Professional Icons */
+        .use-cases{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+        .use-case{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all 0.2s}
+        .use-case:hover{border-color:var(--accent);box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+        .use-case-icon{width:48px;height:48px;background:var(--accent-light);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+        .use-case-icon svg{width:24px;height:24px;color:var(--accent)}
+        .use-case h4{font-size:16px;font-weight:600;margin-bottom:10px}
+        .use-case p{font-size:14px;color:var(--text-muted);line-height:1.6}
+        
+        /* FAQ */
+        .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+        .faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
+        .faq-item h4{font-size:15px;font-weight:600;margin-bottom:10px;color:var(--text)}
+        .faq-item p{font-size:14px;color:var(--text-muted);line-height:1.6}
+        
+        /* Roadmap */
+        .roadmap{display:flex;justify-content:center;gap:16px;margin-top:40px;flex-wrap:wrap}
+        .roadmap-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 24px;text-align:center;min-width:200px}
+        .roadmap-item .date{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:4px}
+        .roadmap-item .label{font-size:14px;color:var(--text)}
+        
+        /* Final CTA */
         .final-cta{padding:100px 0;text-align:center}
-        .final-cta h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:700;margin-bottom:16px}
-        .final-cta p{font-size:18px;color:var(--text-muted);margin-bottom:40px}
-        .cta-form{max-width:480px;margin:0 auto}
-        .cta-form .form-row{display:flex;gap:12px;margin-bottom:16px}
-        .cta-form input{flex:1;padding:16px 20px;font-size:16px;font-family:inherit;border:2px solid var(--border);border-radius:10px;background:var(--card);outline:none;transition:all 0.2s}
-        .cta-form input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
-        .cta-incentive{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:var(--success);font-weight:500}
-        .success-message{display:none;padding:20px;background:var(--success-light);border:1px solid var(--success);border-radius:12px;color:var(--success);font-weight:500}
-        .success-message.show{display:block}
-        .different-email{display:none;margin-top:12px;font-size:14px}
-        .different-email.show{display:block}
-        .different-email a{color:var(--text-muted);cursor:pointer}
+        .final-cta h2{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:12px}
+        .final-cta p{font-size:17px;color:var(--text-muted);margin-bottom:36px}
+        .cta-form{max-width:440px;margin:0 auto}
+        .cta-form .form-row{display:flex;gap:12px;margin-bottom:14px}
+        .cta-form input{flex:1;padding:14px 18px;font-size:15px;font-family:inherit;border:1px solid var(--border);border-radius:8px;background:var(--card);outline:none}
+        .cta-form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+        
+        /* Footer */
         footer{padding:60px 0 40px;border-top:1px solid var(--border)}
         .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:40px}
-        .footer-brand p{font-size:14px;color:var(--text-muted);margin-top:16px;max-width:280px}
-        .footer-links h5{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;margin-bottom:16px}
-        .footer-links a{display:block;font-size:14px;color:var(--text-muted);text-decoration:none;margin-bottom:10px;transition:color 0.2s}
+        .footer-brand p{font-size:14px;color:var(--text-muted);margin-top:12px;max-width:260px}
+        .footer-links h5{font-size:13px;font-weight:600;margin-bottom:14px}
+        .footer-links a{display:block;font-size:14px;color:var(--text-muted);text-decoration:none;margin-bottom:8px}
         .footer-links a:hover{color:var(--accent)}
-        .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:14px;color:var(--text-muted)}
-        .footer-bottom a{color:var(--text-muted);text-decoration:none}
-        .footer-bottom a:hover{color:var(--accent)}
-        @media(max-width:900px){.hero-grid{grid-template-columns:1fr;text-align:center}.hero-sub{margin:0 auto 32px}.hero-form{flex-direction:column;max-width:400px;margin:0 auto 16px}.hero-note{justify-content:center}.phone-mockup{margin-top:48px}.stats-grid{grid-template-columns:repeat(2,1fr);gap:32px}.problem-grid,.features-grid,.comparison-grid,.faq-grid{grid-template-columns:1fr}.checklist-items{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.step::after{display:none}.testimonials{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr;gap:40px}.nav-links{display:none}}
-        @media(max-width:480px){.stats-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:16px;text-align:center}.cta-form .form-row{flex-direction:column}}
+        .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted)}
+        .footer-bottom a{color:var(--text-muted);text-decoration:none;margin-left:16px}
+        
+        @media(max-width:900px){
+            .hero-grid{grid-template-columns:1fr;text-align:center}
+            .hero-sub{margin:0 auto 32px}
+            .hero-form{flex-direction:column;max-width:400px;margin:0 auto 16px}
+            .hero-note{justify-content:center}
+            .phone-mockup{margin-top:50px}
+            .stats-grid{grid-template-columns:repeat(2,1fr);gap:30px}
+            .problem-grid,.faq-grid{grid-template-columns:1fr}
+            .steps,.use-cases{grid-template-columns:1fr}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+            .nav-links{display:none}
+            .comparison-table{overflow-x:auto}
+        }
+        @media(max-width:480px){
+            .stats-grid{grid-template-columns:1fr}
+            .footer-grid{grid-template-columns:1fr}
+            .footer-bottom{flex-direction:column;gap:12px}
+            .cta-form .form-row{flex-direction:column}
+            .roadmap{flex-direction:column;align-items:center}
+        }
     </style>
 </head>
 <body>
-    <div class="ph-banner">🚀 We're launching on <a href="https://www.producthunt.com/products/noscam" target="_blank">Product Hunt January 22</a> — Follow us!</div>
-    <nav><div class="container nav-inner"><a href="/" class="logo"><svg class="logo-icon" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#DC2626"/><path d="M50 20 L75 35 V55 C75 70 50 85 50 85 C50 85 25 70 25 55 V35 L50 20Z" fill="white"/><path d="M45 50 L48 53 L55 46" stroke="#DC2626" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>NoScam</a><div class="nav-links"><a href="#how-it-works">How It Works</a><a href="#features">Features</a><a href="#faq">FAQ</a><a href="#signup" class="btn btn-primary">Get Early Access</a></div></div></nav>
-    <section class="hero"><div class="container"><div class="hero-grid"><div class="hero-content"><div class="hero-badge">Android · Coming January 2026</div><h1>Scammers target the people <span class="highlight">you love</span></h1><p class="hero-sub"><strong>$61 billion</strong> stolen from seniors last year. NoScam uses AI to warn during the call — not after it's too late.</p><form class="hero-form" id="hero-form"><input type="email" id="hero-email" placeholder="Enter your email" required><button type="submit" class="btn btn-primary">Get Early Access</button></form><p class="hero-note"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Early access + 3 months free for waitlist</p><div class="success-message" id="hero-success">✓ You're on the list! We'll email you when NoScam is ready.</div><p class="different-email" id="hero-different"><a onclick="resetForm('hero')">Use a different email</a></p></div><div class="phone-mockup"><div class="phone-frame"><div class="phone-screen"><div class="phone-notch"></div><div class="call-ui"><div class="caller-avatar">?</div><div class="caller-name">Unknown Caller</div><div class="caller-number">+1 (555) 123-4567</div><div class="call-duration">02:34</div><div class="scam-alert" id="scam-alert"><div class="alert-header"><div class="alert-icon">⚠️</div><div class="alert-title">Scam Detected</div></div><div class="alert-text">Caller requesting gift card payment — a common scam tactic.</div><div class="alert-buttons"><button class="alert-btn end">End Call</button><button class="alert-btn dismiss">Not a Scam</button></div></div></div><div class="listening-indicator"><div class="listening-dot"></div>NoScam AI Listening</div><div class="call-actions"><div class="call-action-btn speaker">🔊</div><div class="call-action-btn end-call">📞</div></div></div></div></div></div></div></section>
-    <section class="stats"><div class="container"><div class="stats-grid"><div class="stat-item"><h3>$61B</h3><p>Lost to fraud by seniors in 2023</p></div><div class="stat-item"><h3>1.1M</h3><p>Robocall complaints to FTC in 2024</p></div><div class="stat-item"><h3>80%</h3><p>Of seniors answer unknown calls</p></div><div class="stat-item"><h3>97%</h3><p>Of Android users can't use Pixel features</p></div></div></div></section>
-    <section class="problem"><div class="container"><span class="section-label">The Problem</span><h2 class="section-title">Current solutions warn you too late — or not at all</h2><p class="section-desc">Caller ID apps tell you who's calling. But scammers use new numbers daily. By the time you realize it's a scam, the damage is done.</p><div class="problem-grid"><div class="problem-card"><div class="icon">📵</div><h4>Caller ID Doesn't Work</h4><p>Scammers spoof numbers and use new ones daily. Database-based blocking is always one step behind.</p></div><div class="problem-card"><div class="icon">⏰</div><h4>Warnings Come Too Late</h4><p>Apps show "suspected spam" before you answer. But sophisticated scams only reveal themselves during the conversation.</p></div><div class="problem-card"><div class="icon">🤖</div><h4>AI Voice Cloning</h4><p>Scammers can clone anyone's voice for under $10. They call pretending to be your grandchild — sounding exactly like them.</p></div><div class="problem-card"><div class="icon">🔒</div><h4>Pixel-Only Features</h4><p>Google's scam detection only works on Pixel phones (3% of Android). Everyone else is unprotected.</p></div></div><div class="checklist"><h4>Sound familiar?</h4><div class="checklist-items"><div class="checklist-item"><div class="check">✓</div>Your parent gets 4-5 scam calls a day</div><div class="checklist-item"><div class="check">✓</div>They answer every call "just in case"</div><div class="checklist-item"><div class="check">✓</div>Caller ID says "Spam" but they pick up anyway</div><div class="checklist-item"><div class="check">✓</div>You've tried Truecaller — it didn't help</div><div class="checklist-item"><div class="check">✓</div>You worry about the call you don't know about</div><div class="checklist-item"><div class="check">✓</div>They consider it rude to hang up on callers</div></div></div></div></section>
-    <section class="how-it-works" id="how-it-works"><div class="container"><span class="section-label">How It Works</span><h2 class="section-title">Your real-time guardian during calls</h2><p class="section-desc">NoScam listens to the conversation and warns you the moment it detects scam tactics — before you give anything away.</p><div class="steps"><div class="step"><div class="step-num">1</div><h4>Call Comes In</h4><p>Answer any call normally. NoScam activates automatically in the background.</p></div><div class="step"><div class="step-num">2</div><h4>AI Analyzes in Real-Time</h4><p>On-device AI listens for pressure tactics, urgency, impersonation, and known scam scripts.</p></div><div class="step"><div class="step-num">3</div><h4>Instant Warning</h4><p>If scam patterns detected, you get an alert with vibration, sound, and visual warning.</p></div></div></div></section>
-    <section class="features" id="features"><div class="container"><span class="section-label">Features</span><h2 class="section-title">Protection that actually works</h2><p class="section-desc">Unlike caller ID apps that check phone numbers, NoScam analyzes what's actually being said.</p><div class="features-grid"><div class="feature-card"><div class="icon">🛡️</div><h4>Live Scam Detection</h4><p>AI monitors conversations in real-time, detecting pressure tactics, fake urgency, and impersonation as they happen.</p></div><div class="feature-card"><div class="icon">🔊</div><h4>Voice Pattern Analysis</h4><p>Detects AI-generated voices and common scam call scripts. Works even on brand new phone numbers.</p></div><div class="feature-card"><div class="icon">👥</div><h4>Crowdsourced Intelligence</h4><p>When users report scams, the AI learns new patterns. The more people use NoScam, the smarter it gets.</p></div><div class="feature-card"><div class="icon">🔐</div><h4>100% On-Device</h4><p>All processing happens on your phone. No audio recordings, no cloud uploads, no data selling.</p></div></div></div></section>
-    <section class="comparison"><div class="container"><span class="section-label">Why NoScam</span><h2 class="section-title">Not just another caller ID app</h2><p class="section-desc">See how NoScam compares to existing solutions that aren't stopping scammers.</p><div class="comparison-grid"><div class="comparison-card others"><div class="comparison-header">Truecaller, Hiya & Others</div><ul class="comparison-list"><li><span class="icon">✕</span>Only checks phone number databases</li><li><span class="icon">✕</span>Scammers use new numbers daily</li><li><span class="icon">✕</span>Shows warning before you answer</li><li><span class="icon">✕</span>Uploads your contacts to cloud</li><li><span class="icon">✕</span>Fullscreen ads, even premium</li><li><span class="icon">✕</span>Can't detect AI-cloned voices</li></ul></div><div class="comparison-card noscam"><div class="comparison-header">NoScam</div><ul class="comparison-list"><li><span class="icon">✓</span>Analyzes conversation with AI</li><li><span class="icon">✓</span>Works on any phone number</li><li><span class="icon">✓</span>Warns during the call</li><li><span class="icon">✓</span>100% on-device, nothing uploaded</li><li><span class="icon">✓</span>Zero ads. Ever.</li><li><span class="icon">✓</span>Detects AI voice patterns</li></ul></div></div></div></section>
-    <section class="social-proof"><div class="container"><span class="section-label">What People Say</span><h2 class="section-title">Why families need this</h2><div class="testimonials"><div class="testimonial"><p class="testimonial-text">"My dad gets 4-5 scam calls a day. Truecaller doesn't help. I need something that warns him DURING the call."</p><div class="testimonial-author"><div class="testimonial-avatar">👨</div><div class="testimonial-info"><strong>Adult Son</strong><span>Caregiver for 78-year-old father</span></div></div></div><div class="testimonial"><p class="testimonial-text">"My mother-in-law fell for a car warranty scam. She doesn't even have a car. We had to take her phone away."</p><div class="testimonial-author"><div class="testimonial-avatar">👩</div><div class="testimonial-info"><strong>Daughter-in-law</strong><span>Bogleheads forum</span></div></div></div><div class="testimonial"><p class="testimonial-text">"She considers it rude to hang up. By the time she realizes it's a scam, they've already gotten her info."</p><div class="testimonial-author"><div class="testimonial-avatar">👧</div><div class="testimonial-info"><strong>Granddaughter</strong><span>AgingCare.com</span></div></div></div></div><div class="waitlist-count"><p>🎉 Join <span id="waitlist-num">847</span> people on the waitlist</p></div></div></section>
-    <section class="faq" id="faq"><div class="container"><span class="section-label">FAQ</span><h2 class="section-title">Common questions</h2><div class="faq-grid"><div class="faq-item"><h4>How does it work during calls?</h4><p>NoScam runs in the background. Our AI listens for scam patterns — urgency, pressure, requests for gift cards. When detected, you get an immediate alert while still on the call.</p></div><div class="faq-item"><h4>Is my privacy protected?</h4><p>100%. All AI processing happens on your device. We never record calls, never upload audio to the cloud, and never sell data.</p></div><div class="faq-item"><h4>How is this different from Truecaller?</h4><p>Truecaller checks phone databases before you answer. NoScam analyzes what's being said during the call. We catch scammers by their tactics, not their numbers.</p></div><div class="faq-item"><h4>Will it work on my phone?</h4><p>NoScam launches on Android in January 2026. iOS version is planned for later in 2026.</p></div><div class="faq-item"><h4>What about Google's Scam Detection?</h4><p>Google's feature only works on Pixel phones (about 3% of Android). NoScam brings this protection to every Android phone.</p></div><div class="faq-item"><h4>Can I install it on my parent's phone?</h4><p>Yes! That's exactly who we built this for. Install it once, configure simple settings, and it runs silently.</p></div></div></div></section>
-    <section class="final-cta" id="signup"><div class="container"><h2>Protect the people you love</h2><p>Install once on your parent's phone. Or your own. Never worry about scam calls again.</p><div class="cta-form"><form id="cta-form"><div class="form-row"><input type="email" id="cta-email" placeholder="Enter your email" required><button type="submit" class="btn btn-primary">Get Early Access</button></div></form><p class="cta-incentive"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>Early access + 3 months free</p><div class="success-message" id="cta-success">✓ You're on the list!</div><p class="different-email" id="cta-different"><a onclick="resetForm('cta')">Use a different email</a></p></div></div></section>
-    <footer><div class="container"><div class="footer-grid"><div class="footer-brand"><a href="/" class="logo"><svg class="logo-icon" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#DC2626"/><path d="M50 20 L75 35 V55 C75 70 50 85 50 85 C50 85 25 70 25 55 V35 L50 20Z" fill="white"/><path d="M45 50 L48 53 L55 46" stroke="#DC2626" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>NoScam</a><p>AI-powered scam protection for the people you love.</p></div><div class="footer-links"><h5>Product</h5><a href="#how-it-works">How It Works</a><a href="#features">Features</a><a href="#faq">FAQ</a></div><div class="footer-links"><h5>Legal</h5><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div><div class="footer-links"><h5>Connect</h5><a href="mailto:hello@noscam.io">hello@noscam.io</a><a href="https://twitter.com/noscamapp">Twitter</a><a href="https://www.producthunt.com/products/noscam">Product Hunt</a></div></div><div class="footer-bottom"><p>© 2026 NoScam. All rights reserved.</p><p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p></div></div></footer>
+    <div class="ph-banner">🚀 Launching on <a href="https://www.producthunt.com/products/noscam" target="_blank">Product Hunt Jan 22</a> — Follow for launch day!</div>
+    
+    <nav>
+        <div class="container nav-inner">
+            <a href="/" class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#4F46E5"/><path d="M50 20 L75 35 V55 C75 70 50 85 50 85 C50 85 25 70 25 55 V35 L50 20Z" fill="white"/><path d="M45 50 L48 53 L55 46" stroke="#4F46E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                NoScam
+            </a>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#features">Features</a>
+                <a href="#faq">FAQ</a>
+                <a href="#signup" class="btn btn-primary">Get Early Access</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <div class="hero-badge">🛡️ Android · Coming Q1 2026</div>
+                    <h1>Your AI Guardian for <span class="highlight">Calls, Texts & Chats</span></h1>
+                    <p class="hero-sub">NoScam uses on-device AI to detect scams in real-time—whether you're on a call, in WhatsApp, or texting. One shield for all your communications.</p>
+                    <form class="hero-form" id="hero-form">
+                        <input type="email" id="hero-email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">Join Waitlist — 3 Months Free</button>
+                    </form>
+                    <p class="hero-note">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        100% on-device. We never see your messages.
+                    </p>
+                    <div class="success-message" id="hero-success">✓ You're on the list! We'll email you when NoScam is ready.</div>
+                    <p class="different-email" id="hero-different"><a onclick="resetForm('hero')">Use a different email</a></p>
+                </div>
+                
+                <div class="phone-mockup">
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <div class="android-ui">
+                                <div class="status-bar">
+                                    <div class="status-bar-left">9:41</div>
+                                    <div class="status-bar-right">
+                                        <span>5G</span>
+                                        <span>100%</span>
+                                    </div>
+                                </div>
+                                <div class="call-content">
+                                    <div class="caller-avatar">?</div>
+                                    <div class="caller-name">Unknown</div>
+                                    <div class="caller-number">+1 (555) 847-2938</div>
+                                    <div class="call-status">02:34</div>
+                                </div>
+                                
+                                <div class="scam-alert" id="scam-alert">
+                                    <div class="alert-header">
+                                        <div class="alert-icon-box">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                        </div>
+                                        <span class="alert-badge-text">NoScam Alert</span>
+                                    </div>
+                                    <div class="alert-title">Scam Detected</div>
+                                    <div class="alert-desc">Caller requesting gift card payment — a common scam tactic to steal money.</div>
+                                    <div class="alert-btns">
+                                        <button class="alert-btn alert-btn-end">End Call</button>
+                                        <button class="alert-btn alert-btn-safe">Not a Scam</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="protection-pill">
+                                    <span class="protection-dot"></span>
+                                    NoScam protecting
+                                </div>
+                                
+                                <div class="call-buttons">
+                                    <div class="call-btn">
+                                        <div class="call-btn-circle red">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" transform="rotate(135 12 12)"/></svg>
+                                        </div>
+                                        <span>End</span>
+                                    </div>
+                                    <div class="call-btn">
+                                        <div class="call-btn-circle green">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                                        </div>
+                                        <span>Speaker</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat"><h3>$61B</h3><p>Lost to fraud by seniors in 2023</p></div>
+                <div class="stat"><h3>1.1M</h3><p>Robocall complaints in 2024</p></div>
+                <div class="stat"><h3>97%</h3><p>Of Android can't use Pixel features</p></div>
+                <div class="stat"><h3>100%</h3><p>Of chat apps have no scam protection</p></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Problem Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">The Problem</span>
+                <h2 class="section-title">Scammers Aren't Just Calling Anymore</h2>
+                <p class="section-desc">They attack across every channel — calls, SMS, WhatsApp, Messenger. You need one shield for all.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h4>Omnichannel Attacks</h4>
+                    <p>Scams move seamlessly from calls to WhatsApp, SMS, and Messenger. They follow you everywhere.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <h4>Sneaky Text Scams</h4>
+                    <p>Fake delivery alerts, bank fraud warnings, and phishing links arrive silently in your messages.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A1.5 1.5 0 0 0 6 14.5 1.5 1.5 0 0 0 7.5 16 1.5 1.5 0 0 0 9 14.5 1.5 1.5 0 0 0 7.5 13m9 0a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5z"/></svg>
+                    </div>
+                    <h4>AI-Powered Scale</h4>
+                    <p>AI lets scammers clone voices and generate personalized phishing messages at massive scale.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    </div>
+                    <h4>Fragmented Defense</h4>
+                    <p>One app for calls, another for SMS — and you're still unprotected in chat apps.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="section section-alt" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">How It Works</span>
+                <h2 class="section-title">One Guardian, Everywhere You Talk</h2>
+                <p class="section-desc">NoScam protects you across all your communication channels with on-device AI.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    </div>
+                    <h4>Activity Anywhere</h4>
+                    <p>Get a call, SMS, or message on WhatsApp, Telegram, or Messenger. NoScam is ready.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h4>AI Guards the Gateway</h4>
+                    <p>Our on-device AI scans voice, text, and links in real-time for scam patterns.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                    </div>
+                    <h4>Instant Alert</h4>
+                    <p>See a clear warning overlay within the app you're using — before any damage is done.</p>
+                </div>
+            </div>
+            <div class="tech-note-wrap">
+                <div class="tech-note">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    100% on-device processing. We never see your calls, messages, or contacts.
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features & Comparison -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Features</span>
+                <h2 class="section-title">Beyond Caller ID. An AI Security Layer.</h2>
+                <p class="section-desc">See how NoScam compares to existing solutions.</p>
+            </div>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Protection Layer</th>
+                            <th>Truecaller / Hiya</th>
+                            <th class="noscam-col">NoScam</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Voice Calls</strong></td>
+                            <td>Database blocking</td>
+                            <td class="noscam-col"><span class="check">✓</span> Real-time AI voice analysis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SMS/Text Messages</strong></td>
+                            <td>Basic spam filter</td>
+                            <td class="noscam-col"><span class="check">✓</span> AI analysis for phishing & urgency</td>
+                        </tr>
+                        <tr>
+                            <td><strong>WhatsApp/Telegram</strong></td>
+                            <td><span class="cross">✗</span> No protection</td>
+                            <td class="noscam-col"><span class="check">✓</span> In-chat detection (Q2 Update)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Detection Method</strong></td>
+                            <td>Reactive databases</td>
+                            <td class="noscam-col"><span class="check">✓</span> Proactive on-device AI</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Privacy</strong></td>
+                            <td>Uploads your data</td>
+                            <td class="noscam-col"><span class="check">✓</span> Nothing leaves your device</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Use Cases -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Use Cases</span>
+                <h2 class="section-title">Built for Real-Life Risks</h2>
+            </div>
+            <div class="use-cases">
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h4>For Your Parents</h4>
+                    <p>Blocks voice scam calls and filters out dangerous SMS phishing links. Simple setup, always-on protection.</p>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <h4>For You</h4>
+                    <p>Warns about fake bank alerts in SMS and suspicious links in WhatsApp groups before you click.</p>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <h4>For Your Family</h4>
+                    <p>One setup protects every Android phone at home across all apps. Family-wide security.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ -->
+    <section class="section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">FAQ</span>
+                <h2 class="section-title">Common Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Which messaging apps will you support?</h4>
+                    <p>Launch includes calls and SMS. WhatsApp & Telegram protection is our first planned update in Q2 2026. Join waitlist to vote on next apps.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How can you read my WhatsApp messages?</h4>
+                    <p>We use Android's Accessibility API to analyze text on-screen only when active. All analysis happens on your device. We never store or transmit messages.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Will this drain my battery?</h4>
+                    <p>Our AI only activates when you're in a call or messaging app. Minimal battery impact — similar to having a messaging app open.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Is my privacy protected?</h4>
+                    <p>100%. All AI processing happens on your device. No recordings, no cloud uploads, no data selling. Your conversations stay private.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How is this different from Truecaller?</h4>
+                    <p>Truecaller checks phone databases. NoScam analyzes what's actually being said in real-time — across calls AND messages.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I install it on my parent's phone?</h4>
+                    <p>Yes! Install once, configure simple settings, and it runs silently. Perfect for protecting less tech-savvy family members.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final CTA -->
+    <section class="final-cta" id="signup">
+        <div class="container">
+            <h2>Take Back Control of Your Phone</h2>
+            <p>The first app that guards you across calls, texts, and chats — with privacy built in.</p>
+            <div class="cta-form">
+                <form id="cta-form">
+                    <div class="form-row">
+                        <input type="email" id="cta-email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">Join Android Waitlist</button>
+                    </div>
+                </form>
+                <p class="hero-note" style="justify-content:center;margin-top:12px">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;color:var(--success)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Early access + 3 months free
+                </p>
+                <div class="success-message" id="cta-success">✓ You're on the list!</div>
+                <p class="different-email" id="cta-different"><a onclick="resetForm('cta')">Use a different email</a></p>
+            </div>
+            
+            <div class="roadmap">
+                <div class="roadmap-item"><div class="date">Q1 2026</div><div class="label">Call & SMS Protection</div></div>
+                <div class="roadmap-item"><div class="date">Q2 2026</div><div class="label">WhatsApp & Telegram</div></div>
+                <div class="roadmap-item"><div class="date">H2 2026</div><div class="label">Advanced Features</div></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <svg class="logo-icon" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#4F46E5"/><path d="M50 20 L75 35 V55 C75 70 50 85 50 85 C50 85 25 70 25 55 V35 L50 20Z" fill="white"/><path d="M45 50 L48 53 L55 46" stroke="#4F46E5" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        NoScam
+                    </a>
+                    <p>AI-powered scam protection across calls, texts, and chats. Privacy-first, always.</p>
+                </div>
+                <div class="footer-links">
+                    <h5>Product</h5>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#features">Features</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <div class="footer-links">
+                    <h5>Legal</h5>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+                <div class="footer-links">
+                    <h5>Connect</h5>
+                    <a href="mailto:hello@noscam.io">hello@noscam.io</a>
+                    <a href="https://twitter.com/noscamapp">Twitter</a>
+                    <a href="https://www.producthunt.com/products/noscam">Product Hunt</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 NoScam. All rights reserved.</span>
+                <div><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+            </div>
+        </div>
+    </footer>
+    
     <script>
-        setTimeout(()=>document.getElementById('scam-alert').classList.add('active'),2000);
+        setTimeout(()=>document.getElementById('scam-alert').classList.add('show'),2000);
         const submitted=localStorage.getItem('noscam_submitted')==='true';
         if(submitted)showSuccessState();
         function showSuccessState(){['hero-form','cta-form'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none'});['hero-success','cta-success'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('show')});['hero-different','cta-different'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.add('show')})}
         function resetForm(p){const f=document.getElementById(p+'-form'),s=document.getElementById(p+'-success'),d=document.getElementById(p+'-different');if(f){f.style.display='flex';f.reset()}if(s)s.classList.remove('show');if(d)d.classList.remove('show')}
-        async function submitEmail(email){try{let country='unknown';try{const r=await fetch('https://ipapi.co/country_name/');if(r.ok)country=await r.text()}catch(e){}await fetch('https://eastoooirwebberfytyh.supabase.co/rest/v1/signups',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN','Authorization':'Bearer sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN'},body:JSON.stringify({email,country,device:/Mobile|Android|iPhone/i.test(navigator.userAgent)?'mobile':'desktop',source:new URLSearchParams(location.search).get('ref')||'direct',referrer:document.referrer||'direct'})});localStorage.setItem('noscam_submitted','true');showSuccessState();const n=document.getElementById('waitlist-num');if(n)n.textContent=parseInt(n.textContent)+1}catch(e){alert('Something went wrong.')}}
+        async function submitEmail(email){try{let country='unknown';try{const r=await fetch('https://ipapi.co/country_name/');if(r.ok)country=await r.text()}catch(e){}await fetch('https://eastoooirwebberfytyh.supabase.co/rest/v1/signups',{method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN','Authorization':'Bearer sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN'},body:JSON.stringify({email,country,device:/Mobile|Android|iPhone/i.test(navigator.userAgent)?'mobile':'desktop',source:new URLSearchParams(location.search).get('ref')||'direct',referrer:document.referrer||'direct'})});localStorage.setItem('noscam_submitted','true');showSuccessState()}catch(e){alert('Something went wrong.')}}
         document.getElementById('hero-form').addEventListener('submit',async e=>{e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;b.textContent='Joining...';await submitEmail(document.getElementById('hero-email').value)});
         document.getElementById('cta-form').addEventListener('submit',async e=>{e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;b.textContent='Joining...';await submitEmail(document.getElementById('cta-email').value)});
     </script>

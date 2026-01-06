@@ -358,7 +358,12 @@
         }
         
         function showForm(formId, successId, resubmitId) {
-            document.getElementById(formId).style.display = 'flex';
+            const form = document.getElementById(formId);
+            form.style.display = 'flex';
+            form.reset();
+            const button = form.querySelector('button');
+            button.disabled = false;
+            button.textContent = formId === 'signup-form' ? 'Get Early Access' : 'Join Waitlist';
             document.getElementById(successId).style.display = 'none';
             document.getElementById(resubmitId).style.display = 'none';
             if (formId === 'signup-form') {

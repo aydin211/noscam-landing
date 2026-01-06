@@ -341,9 +341,12 @@
     <script>
         let hasSubmitted = localStorage.getItem('noscam_submitted') === 'true';
         
-        // Hide bottom form if already submitted
+        // Hide both forms if already submitted
         if (hasSubmitted) {
+            document.getElementById('signup-form').style.display = 'none';
             document.getElementById('signup-form-2').style.display = 'none';
+            document.querySelector('.form-note').style.display = 'none';
+            document.getElementById('success').style.display = 'block';
             document.getElementById('success-2').style.display = 'block';
         }
         
@@ -369,12 +372,11 @@
                     body: JSON.stringify({ email, country: info.country, device: info.device, source: info.source, referrer: info.referrer })
                 });
                 if (res.ok || res.status === 201) {
-                    form.style.display = 'none';
-                    document.getElementById(successId).style.display = 'block';
                     // Mark as submitted and hide both forms
                     localStorage.setItem('noscam_submitted', 'true');
                     document.getElementById('signup-form').style.display = 'none';
                     document.getElementById('signup-form-2').style.display = 'none';
+                    document.querySelector('.form-note').style.display = 'none';
                     document.getElementById('success').style.display = 'block';
                     document.getElementById('success-2').style.display = 'block';
                 }

@@ -59,6 +59,9 @@
         .signup-form button { padding: 16px 28px; font-size: 16px; font-family: inherit; font-weight: 600; background: var(--accent); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
         .signup-form button:hover { background: #1447b8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26, 86, 219, 0.3); }
         .form-note { margin-top: 14px; font-size: 13px; color: var(--text-muted); }
+        .resubmit-link { margin-top: 10px; font-size: 13px; text-align: center; }
+        .resubmit-link a { color: var(--text-muted); text-decoration: underline; }
+        .resubmit-link a:hover { color: var(--accent); }
         .success-message { display: none; padding: 16px 24px; background: var(--success-soft); border: 1px solid #a7f3d0; border-radius: 12px; color: var(--success); font-weight: 500; max-width: 440px; margin: 20px auto 0; }
         
         .trust-bar { display: flex; justify-content: center; gap: 32px; margin-top: 48px; flex-wrap: wrap; }
@@ -182,6 +185,7 @@
             </form>
             <p class="form-note">Join the waitlist. No spam, just launch updates.</p>
             <div class="success-message" id="success">✓ You're on the list. We'll notify you at launch.</div>
+            <p class="resubmit-link" id="resubmit" style="display:none;"><a href="#" onclick="showForm('signup-form', 'success', 'resubmit'); return false;">Submit a different email</a></p>
             
             <div class="trust-bar">
                 <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>100% private</div>
@@ -323,6 +327,7 @@
                 <button type="submit">Join Waitlist</button>
             </form>
             <div class="success-message" id="success-2">✓ You're on the list. We'll notify you at launch.</div>
+            <p class="resubmit-link" id="resubmit-2" style="display:none;"><a href="#" onclick="showForm('signup-form-2', 'success-2', 'resubmit-2'); return false;">Submit a different email</a></p>
         </div>
     </section>
     
@@ -341,13 +346,24 @@
     <script>
         let hasSubmitted = localStorage.getItem('noscam_submitted') === 'true';
         
-        // Hide both forms if already submitted
+        // Show success state but allow resubmit
         if (hasSubmitted) {
             document.getElementById('signup-form').style.display = 'none';
             document.getElementById('signup-form-2').style.display = 'none';
             document.querySelector('.form-note').style.display = 'none';
             document.getElementById('success').style.display = 'block';
             document.getElementById('success-2').style.display = 'block';
+            document.getElementById('resubmit').style.display = 'block';
+            document.getElementById('resubmit-2').style.display = 'block';
+        }
+        
+        function showForm(formId, successId, resubmitId) {
+            document.getElementById(formId).style.display = 'flex';
+            document.getElementById(successId).style.display = 'none';
+            document.getElementById(resubmitId).style.display = 'none';
+            if (formId === 'signup-form') {
+                document.querySelector('.form-note').style.display = 'block';
+            }
         }
         
         async function getVisitorInfo() {
@@ -358,7 +374,7 @@
             return { country, device, source: urlParams.get('utm_source') || urlParams.get('ref') || 'direct', referrer: document.referrer || 'direct' };
         }
         
-        async function handleSubmit(e, formId, successId) {
+        async function handleSubmit(e, formId, successId, resubmitId) {
             e.preventDefault();
             const form = document.getElementById(formId);
             const email = form.querySelector('input[type="email"]').value;
@@ -372,20 +388,21 @@
                     body: JSON.stringify({ email, country: info.country, device: info.device, source: info.source, referrer: info.referrer })
                 });
                 if (res.ok || res.status === 201) {
-                    // Mark as submitted and hide both forms
                     localStorage.setItem('noscam_submitted', 'true');
                     document.getElementById('signup-form').style.display = 'none';
                     document.getElementById('signup-form-2').style.display = 'none';
                     document.querySelector('.form-note').style.display = 'none';
                     document.getElementById('success').style.display = 'block';
                     document.getElementById('success-2').style.display = 'block';
+                    document.getElementById('resubmit').style.display = 'block';
+                    document.getElementById('resubmit-2').style.display = 'block';
                 }
                 else throw new Error('Failed');
             } catch (err) { button.disabled = false; button.textContent = formId === 'signup-form' ? 'Get Early Access' : 'Join Waitlist'; alert('Something went wrong. Please try again.'); }
         }
         
-        document.getElementById('signup-form').addEventListener('submit', (e) => handleSubmit(e, 'signup-form', 'success'));
-        document.getElementById('signup-form-2').addEventListener('submit', (e) => handleSubmit(e, 'signup-form-2', 'success-2'));
+        document.getElementById('signup-form').addEventListener('submit', (e) => handleSubmit(e, 'signup-form', 'success', 'resubmit'));
+        document.getElementById('signup-form-2').addEventListener('submit', (e) => handleSubmit(e, 'signup-form-2', 'success-2', 'resubmit-2'));
     </script>
 </body>
 </html>

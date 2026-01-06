@@ -328,7 +328,7 @@
     
     <footer>
         <div class="container">
-            <p>© 2026 NoScam · <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="mailto:hello@noscam.io">Contact</a></p>
+            <p>© 2026 NoScam · <a href="mailto:hello@noscam.io">Contact</a></p>
             <div class="footer-bottom">
                 <a href="https://www.producthunt.com/products/noscam" class="ph-badge" target="_blank">
                     <svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 40C8.954 40 0 31.046 0 20S8.954 0 20 0s20 8.954 20 20-8.954 20-20 20zm5-22h-7v-6h7a3 3 0 0 1 0 6zm0-10H14v24h4V22h7a7 7 0 1 0 0-14z"/></svg>
@@ -339,6 +339,14 @@
     </footer>
     
     <script>
+        let hasSubmitted = localStorage.getItem('noscam_submitted') === 'true';
+        
+        // Hide bottom form if already submitted
+        if (hasSubmitted) {
+            document.getElementById('signup-form-2').style.display = 'none';
+            document.getElementById('success-2').style.display = 'block';
+        }
+        
         async function getVisitorInfo() {
             let country = 'unknown';
             try { const res = await fetch('https://ipapi.co/country_name/'); if (res.ok) country = await res.text(); } catch (e) {}
@@ -360,7 +368,16 @@
                     headers: { 'Content-Type': 'application/json', 'apikey': 'sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN', 'Authorization': 'Bearer sb_publishable_9Ume5u-Bx2WJzC6WqcRR1Q_SeiJ1ofN', 'Prefer': 'return=minimal' },
                     body: JSON.stringify({ email, country: info.country, device: info.device, source: info.source, referrer: info.referrer })
                 });
-                if (res.ok || res.status === 201) { form.style.display = 'none'; document.getElementById(successId).style.display = 'block'; }
+                if (res.ok || res.status === 201) {
+                    form.style.display = 'none';
+                    document.getElementById(successId).style.display = 'block';
+                    // Mark as submitted and hide both forms
+                    localStorage.setItem('noscam_submitted', 'true');
+                    document.getElementById('signup-form').style.display = 'none';
+                    document.getElementById('signup-form-2').style.display = 'none';
+                    document.getElementById('success').style.display = 'block';
+                    document.getElementById('success-2').style.display = 'block';
+                }
                 else throw new Error('Failed');
             } catch (err) { button.disabled = false; button.textContent = formId === 'signup-form' ? 'Get Early Access' : 'Join Waitlist'; alert('Something went wrong. Please try again.'); }
         }

@@ -283,25 +283,25 @@
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                                 You're on the list!
                             </h3>
-                            <p>We've sent a confirmation to your inbox. We'll email you launch details and early access instructions.</p>
+                            <p>We'll notify you first when NoScam launches with early access and your 3 free months.</p>
                         </div>
                         <div class="next-steps">
                             <h4>What happens next?</h4>
                             <div class="next-step-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                                <span>Check your inbox for confirmation (check spam too!)</span>
-                            </div>
-                            <div class="next-step-item">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                <span>We'll notify you before anyone else when we launch</span>
+                                <span>We'll email you before anyone else when we launch</span>
                             </div>
                             <div class="next-step-item">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                                 <span>Your first 3 months are free as a waitlist member</span>
                             </div>
+                            <div class="next-step-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                <span>Share with family and friends to help protect them too</span>
+                            </div>
                             <button class="share-btn" onclick="shareNoScam()">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                                Share with someone who needs this
+                                Help us protect more families
                             </button>
                         </div>
                         <p class="different-email"><a onclick="resetHeroForm()">Use a different email</a></p>
@@ -570,7 +570,7 @@
                     </div>
                     <button class="share-btn" onclick="shareNoScam()" style="margin:0 auto;display:flex">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                        Share with someone who needs this
+                        Help us protect more families
                     </button>
                     <p class="different-email" style="text-align:center"><a onclick="resetCtaForm()">Use a different email</a></p>
                 </div>
@@ -688,19 +688,8 @@
                     }
                 }
                 
-                // Send confirmation email via Edge Function
-                try {
-                    await fetch(`${SUPABASE_URL}/functions/v1/send-welcome-email`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${SUPABASE_KEY}`
-                        },
-                        body: JSON.stringify({ email: email })
-                    });
-                } catch(emailErr) {
-                    console.log('Email function not yet deployed');
-                }
+                // Send confirmation email via Edge Function (disabled for now)
+                // Will be enabled when email service is configured
                 
                 localStorage.setItem('noscam_submitted', 'true');
                 

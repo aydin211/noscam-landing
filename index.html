@@ -630,14 +630,22 @@
             localStorage.removeItem('noscam_submitted');
             document.getElementById('hero-form-state').style.display='block';
             document.getElementById('hero-success-state').classList.remove('show');
-            document.getElementById('hero-form').reset();
+            const form = document.getElementById('hero-form');
+            form.reset();
+            const btn = form.querySelector('button');
+            btn.disabled = false;
+            btn.textContent = 'Join Waitlist — 3 Months Free';
         }
         
         function resetCtaForm(){
             localStorage.removeItem('noscam_submitted');
             document.getElementById('cta-form-state').style.display='block';
             document.getElementById('cta-success-state').classList.remove('show');
-            document.getElementById('cta-form').reset();
+            const form = document.getElementById('cta-form');
+            form.reset();
+            const btn = form.querySelector('button');
+            btn.disabled = false;
+            btn.textContent = 'Join Android Waitlist';
         }
         
         function shareNoScam(){
